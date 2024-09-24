@@ -88,7 +88,9 @@ export const handleSubmit = async (
 
 export const HandleSubmitComponent = ({ user, date, compliment, imageUris, loading, setLoading }: SubmitProps) => {
   return (
+    
     <button
+    // @ts-ignore
       onClick={() => handleSubmit(user, { date, compliment, imageUris }, setLoading)} // Call handleSubmit with the loading state
       disabled={loading} // Disable the button when loading
       className={`mt-4 bg-blue-500 text-white py-2 px-4 rounded ${loading ? 'opacity-50' : ''}`}

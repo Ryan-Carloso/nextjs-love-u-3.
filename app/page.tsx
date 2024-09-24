@@ -5,6 +5,8 @@ import { createClient, User } from '@supabase/supabase-js'
 import { format } from 'date-fns'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import Image from 'next/image';
+
 
 import Auth from '@/components/auth'
 import Header from '@/components/header'
@@ -107,7 +109,7 @@ export default function DatePickerWithSupabase() {
                       <div className="mt-2 grid grid-cols-3 gap-2">
                         {imageUris.map((uri, index) => (
                           <div key={index} className="relative">
-                            <img src={uri} alt={`Selected image ${index + 1}`} className="object-cover w-full h-32 rounded" />
+                            <Image src={uri} alt={`Selected image ${index + 1}`} className="object-cover w-full h-32 rounded" />
                           </div>
                         ))}
                       </div>
