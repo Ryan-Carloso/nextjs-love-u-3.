@@ -12,12 +12,14 @@ import { HandleSubmitComponent } from '@/functions/handlesubmit'
 
 const supabase = createClient('https://laqxbdncmapnhorlbbkg.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhcXhiZG5jbWFwbmhvcmxiYmtnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyNjg2MTcyNSwiZXhwIjoyMDQyNDM3NzI1fQ.Xr3j4FThRX5C0Zk5txIqobebk6v5FBf2K5Mahe8vdzY')
 
+
+
 export default function DatePickerWithSupabase() {
   const [date, setDate] = useState(new Date())
   const [compliment, setCompliment] = useState('')
   const [loading, setLoading] = useState(false)
   const [imageUris, setImageUris] = useState<string[]>([])
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(null)
   const [email, setEmail] = useState('')
 
   useEffect(() => {
@@ -30,17 +32,21 @@ export default function DatePickerWithSupabase() {
     }
   }, [])
 
-  const handleDateChange = (date: Date) => {
-    setDate(date)
-  }
+  const handleDateChange = (date: Date | null) => {
+    if (date) {
+      setDate(date);
+    }
+  };
+  
 
-  const pickImage = async () => {
-    const result = await window.showOpenFilePicker({ multiple: true })
-    const files = await Promise.all(result.map(fileHandle => fileHandle.getFile()))
-    const uris = files.map(file => URL.createObjectURL(file))
-    setImageUris(prevUris => [...prevUris, ...uris])
+  // Updated to use an <input> element for file selection
+  const pickImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files
+    if (files) {
+      const uris = Array.from(files).map(file => URL.createObjectURL(file))
+      setImageUris(prevUris => [...prevUris, ...uris])
+    }
   }
-
 
   return (
     <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
@@ -90,15 +96,13 @@ export default function DatePickerWithSupabase() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700">Images</label>
-                    <button
-                      onClick={pickImage}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={pickImage}
                       className="mt-1 w-full inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                    >
-                      <svg className="-ml-1 mr-2 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                      Select Images
-                    </button>
+                    />
                     {imageUris.length > 0 && (
                       <div className="mt-2 grid grid-cols-3 gap-2">
                         {imageUris.map((uri, index) => (

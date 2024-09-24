@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+// Auth.tsx
+import React from 'react';
 import { createClient } from '@supabase/supabase-js';
 
 // Initialize Supabase client
-const supabase = createClient('https://laqxbdncmapnhorlbbkg.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhcXhiZG5jbWFwbmhvcmxiYmtnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyNjg2MTcyNSwiZXhwIjoyMDQyNDM3NzI1fQ.Xr3j4FThRX5C0Zk5txIqobebk6v5FBf2K5Mahe8vdzY');
+const supabase = createClient('https://laqxbdncmapnhorlbbkg.supabase.co', 'your-anon-key');
 
-const Auth = () => {
-  const [email, setEmail] = useState('');
+interface AuthProps {
+  value: string;
+  onChangeText: (value: string) => void;
+}
 
+const Auth: React.FC<AuthProps> = ({ value, onChangeText }) => {
   const sendMagicLink = async () => {
     const { error } = await supabase.auth.signInWithOtp({
-      email,
+      email: value, // Use the value prop here
       options: {
         shouldCreateUser: true,
       },
@@ -28,8 +32,8 @@ const Auth = () => {
       <label className="block text-sm font-medium text-gray-700">Email</label>
       <input
         className="mt-1 p-2 border border-gray-300 rounded"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        value={value} // Use the value prop here
+        onChange={(e) => onChangeText(e.target.value)} // Call onChangeText
         placeholder="Enter your email"
       />
       <button onClick={sendMagicLink} className="bg-blue-500 text-white py-2 px-4 rounded">

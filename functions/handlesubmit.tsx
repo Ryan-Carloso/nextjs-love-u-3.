@@ -7,19 +7,32 @@ type User = {
   // ... user properties
 };
 
+type SubmitProps = {
+  user: User | null;
+  date: Date;
+  compliment: string;
+  imageUris: string[];
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
+};
+
 type SubmitData = {
   date: Date;
   compliment: string;
   imageUris: string[];
 };
 
-type SubmitProps = {
-  user: User;
-  loading: boolean;
-  setLoading: (loading: boolean) => void;
-} & SubmitData;
+type DataToSubmit = {
+  date_time: string;
+  elogios: string;
+  image_urls: string[]; // Define image_urls as an array of strings
+};
 
-export const handleSubmit = async (user: User, { date, compliment, imageUris }: SubmitData, setLoading: (loading: boolean) => void) => {
+export const handleSubmit = async (
+  user: User,
+  { date, compliment, imageUris }: SubmitData,
+  setLoading: (loading: boolean) => void
+) => {
   if (!user) {
     alert('You must be logged in to submit data.');
     return;
@@ -32,26 +45,27 @@ export const handleSubmit = async (user: User, { date, compliment, imageUris }: 
       throw new Error('Please fill all fields');
     }
 
-    const data = {
+    const data: DataToSubmit = { // Explicitly type data
       date_time: date.toISOString(),
       elogios: JSON.stringify({ text: compliment }),
       image_urls: [], // Initialize image_urls as an empty array
-      
     };
 
     // Upload all images
     if (imageUris.length > 0) {
-      const imageUrls: string[] = await Promise.all(imageUris.map(async (uri) => {
-        const response = await fetch(uri);
-        const blob = await response.blob();
-        const { error: storageError, data: storageData } = await supabase.storage
-          .from('images')
-          .upload(`compliment-${Date.now()}-${Math.random()}.jpg`, blob, {
-            contentType: 'image/jpeg',
-          });
-        if (storageError) throw storageError;
-        return storageData.path;
-      }));
+      const imageUrls: string[] = await Promise.all(
+        imageUris.map(async (uri) => {
+          const response = await fetch(uri);
+          const blob = await response.blob();
+          const { error: storageError, data: storageData } = await supabase.storage
+            .from('images')
+            .upload(`compliment-${Date.now()}-${Math.random()}.jpg`, blob, {
+              contentType: 'image/jpeg',
+            });
+          if (storageError) throw storageError;
+          return storageData.path;
+        })
+      );
 
       data.image_urls = imageUrls; // Save all image URLs
     }
@@ -70,6 +84,7 @@ export const handleSubmit = async (user: User, { date, compliment, imageUris }: 
     setLoading(false); // Set loading to false
   }
 };
+
 
 export const HandleSubmitComponent = ({ user, date, compliment, imageUris, loading, setLoading }: SubmitProps) => {
   return (

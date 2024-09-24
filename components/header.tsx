@@ -1,14 +1,17 @@
 import React from 'react';
+import { User } from '@supabase/supabase-js'; // Import the User type from Supabase
 
 interface HeaderProps {
-  user: { email: string };
+  user: User | null; // Accept User type or null
 }
 
-const Header = ({ user }: HeaderProps) => {
+const Header: React.FC<HeaderProps> = ({ user }) => {
   return (
     <div>
       <h1 className="text-2xl font-semibold mb-1">Love you 365 days a year</h1>
-      <p className="black text-xl flex justify-center">Welcome, {user.email}</p> {/* Display the user's email */}
+      <p className="black text-xl flex justify-center">
+        Welcome, {user?.email || 'Guest'} {/* Use optional chaining to handle undefined */}
+      </p>
     </div>
   );
 };
