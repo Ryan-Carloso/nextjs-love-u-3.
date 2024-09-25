@@ -3,7 +3,7 @@ import React from 'react';
 import { createClient } from '@supabase/supabase-js';
 
 // Initialize Supabase client
-const supabase = createClient('https://laqxbdncmapnhorlbbkg.supabase.co', 'your-anon-key');
+const supabase = createClient('https://laqxbdncmapnhorlbbkg.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhcXhiZG5jbWFwbmhvcmxiYmtnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyNjg2MTcyNSwiZXhwIjoyMDQyNDM3NzI1fQ.Xr3j4FThRX5C0Zk5txIqobebk6v5FBf2K5Mahe8vdzY');
 
 interface AuthProps {
   value: string;
@@ -27,7 +27,14 @@ const Auth: React.FC<AuthProps> = ({ value, onChangeText }) => {
     }
   };
 
+  const emailSupport = async () => {
+
+
+  }
+
   return (
+    <div>
+      <h1 className='flex justify-center text-2xl'>Love u 365 Days!</h1>
     <div className="mb-4">
       <label className="block text-sm font-medium text-gray-700">Email</label>
       <input
@@ -36,9 +43,19 @@ const Auth: React.FC<AuthProps> = ({ value, onChangeText }) => {
         onChange={(e) => onChangeText(e.target.value)} // Call onChangeText
         placeholder="Enter your email"
       />
-      <button onClick={sendMagicLink} className="bg-blue-500 text-white py-2 px-4 rounded">
+      <button onClick={sendMagicLink} className=" mx-2 bg-blue-500 text-white py-2 px-4 rounded">
         Send Magic Link
       </button>
+
+    </div>
+    <div className='flex justify-center text-s'>
+    <button onclick={emailSupport} className='bg-blue-500 text-white py-1 px-2 rounded'>
+          Need support? 
+      </button>
+      
+      </div>
+      <p className='flex justify-center text-xs py-2'> click above for email contact</p>
+      
     </div>
   );
 };
