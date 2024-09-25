@@ -9,6 +9,8 @@ import Image from 'next/image';
 
 
 import Auth from '@/components/auth'
+import VideoApp from '@/components/DemoVideo'
+
 import Header from '@/components/header'
 import { HandleSubmitComponent } from '@/functions/handlesubmit'
 
@@ -57,11 +59,18 @@ export default function DatePickerWithSupabase() {
         <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
           <div className="max-w-md mx-auto">
             {!user ? (
-              <Auth value={email} onChangeText={setEmail} />
+              <div>
+                <Auth value={email} onChangeText={setEmail} />
+                
+                {/* Video section */}
+                <div className="mt-4">
+                  <VideoApp />
+                </div>
+              </div>
             ) : (
               <>
                 <Header user={user} />
-
+  
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700">Date</label>
@@ -81,7 +90,7 @@ export default function DatePickerWithSupabase() {
                     </div>
                     <span className="mt-1 block text-sm text-gray-500">{format(date, 'PPP')}</span>
                   </div>
-
+  
                   <div>
                     <label htmlFor="compliment" className="block text-sm font-medium text-gray-700">
                       Compliment
@@ -95,7 +104,7 @@ export default function DatePickerWithSupabase() {
                       className="mt-1 block w-full sm:text-sm border-gray-500 rounded-md  focus:ring-blue-500 focus:border-blue-500"
                     />
                   </div>
-
+  
                   <div>
                     <label className="block text-sm font-medium text-gray-700">Images</label>
                     <input
@@ -115,7 +124,7 @@ export default function DatePickerWithSupabase() {
                       </div>
                     )}
                   </div>
-
+  
                   <HandleSubmitComponent
                     user={user}
                     date={date}
@@ -132,4 +141,4 @@ export default function DatePickerWithSupabase() {
       </div>
     </div>
   )
-}
+  }
