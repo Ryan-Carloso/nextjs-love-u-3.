@@ -28,7 +28,7 @@ const Auth: React.FC<AuthProps> = ({ value, onChangeText }) => {
   };
 
   const emailSupport = () => {
-    window.location.href = 'mailto:support@loveu365days.com';
+    window.location.href = 'mailto:support@makedbyryan.tech';
   };
 
   return (
