@@ -118,7 +118,7 @@ export default function DatePickerWithSupabase() {
                       <div className="mt-2 grid grid-cols-3 gap-2">
                         {imageUris.map((uri, index) => (
                           <div key={index} className="relative">
-                            <Image src={uri} alt={`Selected image ${index + 1}`} className="object-cover w-full h-32 rounded" />
+                            <Image width={50} height={50} src={uri} alt={`Selected image ${index + 1}`} className="object-cover w-full h-32 rounded" />
                           </div>
                         ))}
                       </div>

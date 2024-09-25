@@ -1,7 +1,7 @@
 import React from 'react';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient('https://laqxbdncmapnhorlbbkg.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhcXhiZG5jbWFwbmhvcmxiYmtnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyNjg2MTcyNSwiZXhwIjoyMDQyNDM3NzI1fQ.Xr3j4FThRX5C0Zk5txIqobebk6v5FBf2K5Mahe8vdzY');
+const supabase = createClient('https://laqxbdncmapnhorlbbkg.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhcXhiZG5jbWFwbmhvcmxiYmtnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyNjg2MTcyNSwiZXhwIjoyMDQyNDM3NzI1fQ.Xr3j4FThRX5C0Zk5txIqobebk6v5FBf2K5Mahe8vdzY'); // Replace with your actual key
 
 type User = {
   // ... user properties
@@ -22,14 +22,27 @@ type SubmitData = {
   imageUris: string[];
 };
 
+// Added this type to include the random string
 type DataToSubmit = {
   date_time: string;
   elogios: string;
-  image_urls: string[]; // Define image_urls as an array of strings
+  image_urls: string[];
+  random_string: string; // New field for the random string
+};
+
+// Function to generate a random 8-character alphanumeric string
+const generateRandomString = (length: number): string => {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#*%£€#*:><';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters[randomIndex];
+  }
+  return result;
 };
 
 export const handleSubmit = async (
-  user: User,
+  user: User | null, // Allow user to be null
   { date, compliment, imageUris }: SubmitData,
   setLoading: (loading: boolean) => void
 ) => {
@@ -45,10 +58,13 @@ export const handleSubmit = async (
       throw new Error('Please fill all fields');
     }
 
-    const data: DataToSubmit = { // Explicitly type data
+    const randomString = generateRandomString(12); // Generate the random string
+
+    const data: DataToSubmit = {
       date_time: date.toISOString(),
       elogios: JSON.stringify({ text: compliment }),
       image_urls: [], // Initialize image_urls as an empty array
+      random_string: randomString, // Include the random string in the data
     };
 
     // Upload all images
@@ -85,12 +101,9 @@ export const handleSubmit = async (
   }
 };
 
-
 export const HandleSubmitComponent = ({ user, date, compliment, imageUris, loading, setLoading }: SubmitProps) => {
   return (
-    
     <button
-    // @ts-ignore
       onClick={() => handleSubmit(user, { date, compliment, imageUris }, setLoading)} // Call handleSubmit with the loading state
       disabled={loading} // Disable the button when loading
       className={`mt-4 bg-blue-500 text-white py-2 px-4 rounded ${loading ? 'opacity-50' : ''}`}
