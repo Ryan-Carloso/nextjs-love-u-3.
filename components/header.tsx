@@ -10,7 +10,7 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
     <div>
       <h1 className="text-2xl font-semibold mb-1">Love you 365 days a year</h1>
       <p className="black text-xl flex justify-center">
-        Welcome, {user?.email || 'Guest'} {/* Use optional chaining to handle undefined */}
+        Welcome
       </p>
     </div>
   );
