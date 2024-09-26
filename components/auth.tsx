@@ -1,3 +1,5 @@
+//not using anymore any auth
+
 import React from 'react';
 import { createClient } from '@supabase/supabase-js';
 import Image from 'next/image';
