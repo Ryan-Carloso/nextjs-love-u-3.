@@ -51,11 +51,23 @@ export const handleSubmit = async (
     return;
   }
 
+  if (imageUris.length === 0) {
+    alert('Please upload at least one photo.');
+    return;
+  }
+
+  if (!compliment || compliment.trim() === '') {
+    alert('Please at leats enter one compliment.');
+    // future add an button that if they need help ask AI to help it!
+    // like give 6 thinks u like in your Girlfriend, that ai will build 100 compliments about it! customized for u
+    return;
+  }
+
   setLoading(true); // Set loading to true
 
   try {
-    if (!date || !compliment) {
-      throw new Error('Please fill all fields');
+    if (!date) {
+      throw new Error('Please select a date');
     }
 
     const randomString = generateRandomString(12); // Generate the random string
@@ -103,12 +115,14 @@ export const handleSubmit = async (
 
 export const HandleSubmitComponent = ({ user, date, compliment, imageUris, loading, setLoading }: SubmitProps) => {
   return (
-    <button
-      onClick={() => handleSubmit(user, { date, compliment, imageUris }, setLoading)} // Call handleSubmit with the loading state
-      disabled={loading} // Disable the button when loading
-      className={` text-white py-2 px-4 rounded ${loading ? 'opacity-50' : ''}`}
-    >
-      {loading ? 'Submitting...' : 'Submit'}
-    </button>
+    <div className='flex items-center justify-center w-full py-1 px-4 bg-gradient-to-r from-rose-400 to-pink-500 text-white font-semibold rounded-full shadow-lg hover:from-rose-500 hover:to-pink-600 transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-400 ' >
+      <button
+        onClick={() => handleSubmit(user, { date, compliment, imageUris }, setLoading)} // Call handleSubmit with the loading state
+        disabled={loading} // Disable the button when loading
+        className={`text-white py-2 px-4 rounded ${loading ? 'opacity-50' : ''}`}
+      >
+        {loading ? 'Submitting...' : 'Submit'}
+      </button>
+    </div>
   );
 };
