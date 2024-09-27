@@ -9,6 +9,8 @@ import DateTimePicker from '@/components/datetime'
 import Compliments from '@/components/compliments' 
 import ImgUpload from '@/components/imgUpload'
 import Preview from '@/components/preview'
+import { format } from 'date-fns';
+
 
 import PricingModel from '@/components/pricing'
 
@@ -86,8 +88,11 @@ export default function DatePickerWithSupabase() {
               <Compliments compliment={compliment} setCompliment={setCompliment} />
 
               <ImgUpload imageUris={imageUris} pickImage={pickImage} removeImage={removeImage} />
-              <Preview imageUris={imageUris} compliment={compliment} dateTime={date} />
-
+              <Preview 
+              imageUris={imageUris} 
+              compliment={compliment} 
+              dateTime={format(date, 'MMMM dd, yyyy HH:mm:ss')} // Format the date here
+            />
               <HandleSubmitComponent
                 user={user}
                 date={date}
