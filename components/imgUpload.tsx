@@ -20,7 +20,7 @@ const ImgUpload: React.FC<ImgUploadProps> = ({ imageUris, pickImage, removeImage
         Images
       </label>
       <div 
-        className="mt-1 flex justify-center px-2 pt-2 pb-2 border-2 border-pink-500 border-dashed rounded-md cursor-pointer hover:bg-pink-50 transition duration-150 ease-in-out"
+        className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-pink-500 border-dashed rounded-md cursor-pointer hover:bg-pink-50 transition duration-150 ease-in-out"
         onClick={handleClick} // Allow click on the whole box
       >
         <div className="space-y-2 text-center">
@@ -42,14 +42,14 @@ const ImgUpload: React.FC<ImgUploadProps> = ({ imageUris, pickImage, removeImage
       </div>
 
       {imageUris.length > 0 && (
-        <div className="mt-4 grid grid-cols-3 gap-0 sm:grid-cols-3 md:grid-cols-4">
+        <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
           {imageUris.map((uri, index) => (
             <div key={index} className="relative group">
               <Image
                 src={uri}
                 alt={`Uploaded image ${index + 1}`}
-                width={80}
-                height={80}
+                width={150}
+                height={150}
                 className="rounded-md"
               />
               <button

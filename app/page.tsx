@@ -11,6 +11,10 @@ import ImgUpload from '@/components/imgUpload'
 import Preview from '@/components/preview'
 import { format } from 'date-fns'
 import PricingModel from '@/components/pricing'
+import AlertGoPay from '@/functions/AlertGoPay'
+import Copy from '@/components/Copy'
+
+import HowWorks from '@/components/HowWorks'
 
 // Access the environment variables
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -19,7 +23,7 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 // Initialize Supabase client
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
-export default function DatePickerWithSupabase() {
+export default function App() {
   const [date, setDate] = useState(new Date())
   const [compliment, setCompliment] = useState('')
   const [loading, setLoading] = useState(false)
@@ -88,8 +92,11 @@ export default function DatePickerWithSupabase() {
                   <Compliments compliment={compliment} setCompliment={setCompliment} />
 
                   <ImgUpload imageUris={imageUris} pickImage={pickImage} removeImage={removeImage} />
-                  
-                  <div className='flex items-center justify-center w-full py-1 px-4 bg-gradient-to-r from-rose-400 to-pink-500 text-white font-semibold rounded-full shadow-lg hover:from-rose-500 hover:to-pink-600 transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-400 ' >
+
+                  <AlertGoPay />
+ {/* this is the function to send to Database, reply this page on makedbyryan.tech/upload para o usuario fazer o upload dps de pagar                 
+                   <div className='flex items-center justify-center w-full py-1 px-4 bg-gradient-to-r from-rose-400 to-pink-500 text-white font-semibold rounded-full shadow-lg hover:from-rose-500 hover:to-pink-600 transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-400'>
+ 
                     <HandleSubmitComponent
                       user={user}
                       date={date}
@@ -98,8 +105,12 @@ export default function DatePickerWithSupabase() {
                       loading={loading}
                       setLoading={setLoading}
                     />
+
+
                   </div>
+*/}                  
                 </form>
+
               </div>
 
               <div className="mt-8 lg:mt-0 lg:w-1/2">
@@ -110,17 +121,21 @@ export default function DatePickerWithSupabase() {
                 />
               </div>
             </div>
+
+
           </div>
+          
+        </div>
+        <div className='mt-8'>
+        < HowWorks /> 
+        < Copy/>
+        </div>
+        <div className="mt-8" id="pricing">
+          <PricingModel />
         </div>
 
-        <div className="mt-8">
-        <PricingModel/>
-      </div>
-      
         <VideoApp />
       </div>
-
-
     </div>
   )
 }
