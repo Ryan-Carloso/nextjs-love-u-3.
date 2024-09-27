@@ -10,7 +10,8 @@ interface PreviewProps {
 
 export default function Preview({ imageUris, compliment, dateTime }: PreviewProps) {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="">
+      <h1 className='text-m flex justify-center mb-2'>Preview Below!</h1>
       <IPhoneMockup>
         <div className="relative h-full w-full ">
           <Notification compliment={compliment} />
