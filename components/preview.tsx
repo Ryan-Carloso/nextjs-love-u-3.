@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import Image from 'next/image'
 
 interface PreviewProps {
   imageUris: string[]
@@ -46,9 +47,14 @@ function Notification({ compliment }: { compliment: string }) {
   return (
     <div className="absolute top-8 left-4 right-4 z-10">
       <div className="bg-gray-200 rounded-lg p-2 flex items-center">
-        <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
-          <span className="text-white text-xl">❤️</span>
-        </div>
+        <div className="w-10 h-10 rounded-full flex items-center justify-center">
+              <Image
+            src="/icon.png"
+            width={500}
+            height={500}
+            alt="Picture of the author"
+          />
+                  </div>
         <div className="ml-2 flex-1">
           <h1 className="text-sm font-bold">LOVEU365</h1>
           <p className="text-xs text-gray-600 truncate">{compliment}</p>
@@ -80,8 +86,8 @@ function ImageSection({ imageUris }: { imageUris: string[] }) {
 
 function ComplimentSection({ compliment }: { compliment: string }) {
   return (
-    <div className="absolute left-4 right-4 bottom-20 text-center">
-      <p className="text-sm text-gray-600">"{compliment}"</p>
+    <div className="absolute left-4 right-4 bottom-24 text-center">
+      <p className="text-sm text-gray-700">{compliment}</p>
     </div>
   )
 }
@@ -119,7 +125,7 @@ function TimeElapsedSection({ date }: { date: string }) {
   }, [date])
 
   return (
-    <div className="absolute left-4 right-4 bottom-8 text-center">
+    <div className="absolute left-4 right-4 bottom-10 text-center">
       <p className="text-xs text-gray-500">
         Time since your special moment: {elapsedTime}
       </p>

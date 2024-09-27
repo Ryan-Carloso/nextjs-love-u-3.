@@ -113,12 +113,14 @@ export default function DatePickerWithSupabase() {
           </div>
         </div>
 
+        <div className="mt-8">
+        <PricingModel/>
+      </div>
+      
         <VideoApp />
       </div>
 
-      <div className="mt-8">
-        <PricingModel/>
-      </div>
+
     </div>
   )
 }
