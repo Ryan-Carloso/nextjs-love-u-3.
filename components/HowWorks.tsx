@@ -1,50 +1,30 @@
-// HowWorks.tsx
-
 import React from 'react';
 
-const HowWorks = () => {
+export default function HowWorks() {
+  const steps = [
+    { title: "Share Your Heartfelt Details", description: "Enter your information, including a start date and a sweet message, then watch your love story come to life with a personalized preview of your gift." },
+    { title: "Secure Your Love's Surprise", description: "Complete your purchase effortlessly and securely, ensuring a delightful gifting experience that brings smiles." },
+    { title: "Customize with Love", description: "Add cherished photos and unique compliments that truly resonate with your relationship, making it a gift from the heart." },
+    { title: "Receive Your Special Code", description: "Get a unique code after confirmation, unlocking the magic of our app and activating your thoughtful gift." },
+    { title: "Delight Your Beloved!", description: "Unveil your gift and savor the moment as their eyes light up with joy, celebrating your love together!" },
+  ];
+
   return (
-    <div className="bg-pink-50 p-6 rounded-lg shadow-lg text-center mb-8">
-      <h1 className="text-2xl font-bold text-pink-600 mb-4">How It Works ❤️</h1>
-      <div className="flex flex-col lg:flex-row justify-center items-start lg:space-x-8">
-        <div className="mb-6 lg:mb-0">
-          <span className="text-3xl">1️⃣</span>
-          <h2 className="text-lg font-semibold mt-2">Fill in Your Details</h2>
-          <p className="text-gray-700">
-            Share your love by providing special details, including the date that matters most and your heartfelt message.
-          </p>
-        </div>
-        <div className="mb-6 lg:mb-0">
-          <span className="text-3xl">2️⃣</span>
-          <h2 className="text-lg font-semibold mt-2">See the Preview</h2>
-          <p className="text-gray-700">
-            Witness your creation come to life! Ensure it captures your emotions perfectly before you proceed.
-          </p>
-        </div>
-        <div className="mb-6 lg:mb-0">
-          <span className="text-3xl">3️⃣</span>
-          <h2 className="text-lg font-semibold mt-2">Make the Payment 💰</h2>
-          <p className="text-gray-700">
-            Complete your purchase easily and securely, making it all the more exciting to gift your loved one.
-          </p>
-        </div>
-        <div className="mb-6 lg:mb-0">
-          <span className="text-3xl">4️⃣</span>
-          <h2 className="text-lg font-semibold mt-2">Receive Your Code</h2>
-          <p className="text-gray-700">
-            Once confirmed, receive a special code to access our app or website and bring your gift to life.
-          </p>
-        </div>
-        <div className="mb-6 lg:mb-0">
-          <span className="text-3xl">5️⃣</span>
-          <h2 className="text-lg font-semibold mt-2">Surprise Your Loved One! 🎉</h2>
-          <p className="text-gray-700">
-            Unveil your thoughtful gift and cherish the moment as you see their eyes light up with joy!
-          </p>
-        </div>
+    <div className="bg-pink-50 p-4 md:p-6 rounded-lg">
+      <h2 className="text-2xl font-semibold text-pink-600 mb-4 text-center">How It Works</h2>
+      <div className="flex flex-col md:flex-row md:flex-wrap md:justify-center gap-4">
+        {steps.map((step, index) => (
+          <div key={index} className="bg-white border border-pink-200 rounded-lg p-4 flex items-start space-x-4 md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)]">
+            <div className="flex-shrink-0 w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center">
+              <span className="text-pink-600 font-semibold">{index + 1}</span>
+            </div>
+            <div>
+              <h3 className="font-semibold text-pink-600 mb-1">{step.title}</h3>
+              <p className="text-sm text-gray-600">{step.description}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
-};
-
-export default HowWorks;
+}

@@ -1,22 +1,28 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import { ArrowBigDown } from 'lucide-react';
 import Image from 'next/image'
 
 interface PreviewProps {
   imageUris: string[]
   compliment: string
   dateTime: string
+  couplename: string
+  
 }
 
-export default function Preview({ imageUris, compliment, dateTime }: PreviewProps) {
+export default function Preview({ imageUris, couplename, compliment, dateTime }: PreviewProps) {
   return (
     <div className="">
-      <h1 className='text-m flex justify-center mb-2'>Preview Below!</h1>
+       <div className='flex justify-center items-center	'>
+      <h1 className='text-lg flex justify-center mb-2'>Here's a preview 👇      </h1>
+      </div> 
+      
       <IPhoneMockup>
         <div className="relative h-full w-full ">
           <Notification compliment={compliment} />
-          <ImageSection imageUris={imageUris} />
+          <ImageSection imageUris={imageUris} couplename={couplename}  />
           <ComplimentSection compliment={compliment} />
           <TimeElapsedSection date={dateTime} />
         </div>
@@ -56,17 +62,21 @@ function Notification({ compliment }: { compliment: string }) {
           />
                   </div>
         <div className="ml-2 flex-1">
-          <h1 className="text-sm font-bold">LOVEU365</h1>
+          <h1 className=" flex justify-end text-xs -mb-1 mr-1">now</h1>
+          <h1 className="text-sm font-bold -mt-2">LOVEU365</h1>
           <p className="text-xs text-gray-600 truncate">{compliment}</p>
+
         </div>
       </div>
     </div>
   )
 }
 
-function ImageSection({ imageUris }: { imageUris: string[] }) {
+function ImageSection({ imageUris, couplename }: { imageUris: string[], couplename: string  }) {
   return (
-    <div className="absolute top-[100px] left-4 right-4 flex justify-center items-center">
+    <div>
+    <p className="text-sm text-gray-700 absolute top-[100px] left-4 right-4 flex justify-center items-center">{couplename}</p>
+    <div className="absolute top-[125px] left-4 right-4 flex justify-center items-center">
       <div className="w-full h-[300px]">
         {imageUris.length > 0 ? (
           <img
@@ -81,13 +91,15 @@ function ImageSection({ imageUris }: { imageUris: string[] }) {
         )}
       </div>
     </div>
+    </div>
   )
 }
 
-function ComplimentSection({ compliment }: { compliment: string }) {
+function ComplimentSection({ compliment }: { compliment: string}) {
   return (
     <div className="absolute left-4 right-4 bottom-24 text-center">
       <p className="text-sm text-gray-700">{compliment}</p>
+
     </div>
   )
 }
@@ -127,7 +139,7 @@ function TimeElapsedSection({ date }: { date: string }) {
   return (
     <div className="absolute left-4 right-4 bottom-10 text-center">
       <p className="text-xs text-gray-500">
-        Time since your special moment: {elapsedTime}
+      We've been together for: {elapsedTime}
       </p>
     </div>
   )

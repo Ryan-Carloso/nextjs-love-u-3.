@@ -15,6 +15,9 @@ import AlertGoPay from '@/functions/AlertGoPay'
 import Copy from '@/components/Copy'
 
 import HowWorks from '@/components/HowWorks'
+import FAQ from '@/components/FAQ'
+
+import SocialMedia from '@/components/SocialMedia'
 
 // Access the environment variables
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -30,6 +33,8 @@ export default function App() {
   const [imageUris, setImageUris] = useState<string[]>([])
   const [user, setUser] = useState<User | null>(null)
   const [, setError] = useState<string | null>(null)
+  const [couplename, setCouplename] = useState('')
+
 
   const TEST_USER_EMAIL = 'admin@makedbyryan.tech'
   const TEST_USER_PASSWORD = 'adminpassword134#'
@@ -89,12 +94,12 @@ export default function App() {
 
                   <DateTimePicker date={date} onDateChange={handleDateChange} />
 
-                  <Compliments compliment={compliment} setCompliment={setCompliment} />
+                  <Compliments compliment={compliment} setCompliment={setCompliment} couplename={couplename} setCouplename={setCouplename} />
 
                   <ImgUpload imageUris={imageUris} pickImage={pickImage} removeImage={removeImage} />
 
-                  <AlertGoPay />
- {/* this is the function to send to Database, reply this page on makedbyryan.tech/upload para o usuario fazer o upload dps de pagar                 
+                  <AlertGoPay alert='I want an App personalized' />
+                  {/* this is the function to send to Database, reply this page on makedbyryan.tech/upload para o usuario fazer o upload dps de pagar                 
                    <div className='flex items-center justify-center w-full py-1 px-4 bg-gradient-to-r from-rose-400 to-pink-500 text-white font-semibold rounded-full shadow-lg hover:from-rose-500 hover:to-pink-600 transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-400'>
  
                     <HandleSubmitComponent
@@ -118,6 +123,7 @@ export default function App() {
                   imageUris={imageUris} 
                   compliment={compliment} 
                   dateTime={format(date, 'MMMM dd, yyyy HH:mm:ss')}
+                  couplename={couplename}
                 />
               </div>
             </div>
@@ -128,13 +134,20 @@ export default function App() {
         </div>
         <div className='mt-8'>
         < HowWorks /> 
-        < Copy/>
         </div>
         <div className="mt-8" id="pricing">
           <PricingModel />
         </div>
 
         <VideoApp />
+        <FAQ/>
+        <div className='mb-16' >
+        <AlertGoPay  alert='I want an App personalized' />
+        <SocialMedia/>
+        </div>
+
+
+
       </div>
     </div>
   )
