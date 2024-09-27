@@ -68,10 +68,16 @@ const VideoApp: React.FC = () => {
           <DemoVideo videoPath="/videosDemo/demo2.mp4" /> {/* Pass the video path */}
         </div>
         <div className='min-w-[150px] px-2'>
-          <DemoVideo videoPath="/videosDemo/demo1.mp4" /> {/* Video for test */}
+          <DemoVideo videoPath="/videosDemo/demo3.mp4" /> {/* New video */}
         </div>
         <div className='min-w-[150px] px-2'>
-          <DemoVideo videoPath="/videosDemo/demo2.mp4" /> {/* Video for test */}
+          <DemoVideo videoPath="/videosDemo/demo4.mp4" /> {/* New video */}
+        </div>
+        <div className='min-w-[150px] px-2'>
+          <DemoVideo videoPath="/videosDemo/demo5.mp4" /> {/* New video */}
+        </div>
+        <div className='min-w-[150px] px-2'>
+          <DemoVideo videoPath="/videosDemo/demo6.mp4" /> {/* New video */}
         </div>
       </div>
     </div>

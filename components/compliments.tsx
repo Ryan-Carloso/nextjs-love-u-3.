@@ -1,31 +1,31 @@
 // components/Compliments.tsx
-import React from 'react'
+import React from 'react';
 
 interface ComplimentsProps {
-  compliment: string
-  setCompliment: (compliment: string) => void
+  compliment: string;
+  setCompliment: (compliment: string) => void;
 }
 
 const Compliments: React.FC<ComplimentsProps> = ({ compliment, setCompliment }) => {
   return (
-    <div>
+    <div className="mb-4">
       <label htmlFor="compliment" className="block text-sm font-medium text-gray-700">
-        Compliment
+        Share Your Love Compliment
       </label>
       <textarea
         id="compliment"
         value={compliment}
         onChange={(e) => setCompliment(e.target.value)}
-        placeholder='Enter your compliments here. Separate them with quotation marks, e.g., "I will love you every day for the rest of my life." "I want to spend every moment by your side. I love you!"'
+        placeholder='Express your love! E.g., "I will love you every day for the rest of my life." "I want to spend every moment by your side."'
         rows={4}
-        className="mt-1 block w-full sm:text-sm border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+        className="mt-1 block w-full sm:text-sm border-2 border-pink-400 rounded-md focus:ring-pink-500 focus:border-pink-500 transition duration-150 ease-in-out"
         aria-describedby="compliment-description"
       />
       <p id="compliment-description" className="mt-1 text-sm text-gray-500">
-        Separate your compliments with quotation marks (") to distinguish between them.
+        Use quotation marks (") to separate your beautiful thoughts.
       </p>
     </div>
-  )
+  );
 }
 
-export default Compliments
+export default Compliments;

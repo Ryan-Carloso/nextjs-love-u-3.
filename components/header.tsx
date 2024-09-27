@@ -1,15 +1,26 @@
 import React from 'react';
-import { User } from '@supabase/supabase-js'; // Import the User type from Supabase
+import Image from 'next/image';
 
-interface HeaderProps {
-}
-
-const Header: React.FC<HeaderProps> = ({  }) => {
+const Header: React.FC = () => {
   return (
-    <div>
-      <h1 className="text-2xl font-semibold mb-1">Love you 365 days a year</h1>
-      <p className="black text-xl flex justify-center">
-        Welcome
+    <div className="text-center py-4">
+      {/* Placeholder for logo */}
+      <div className="flex justify-center mb-2">
+        <Image
+          src="/icon.png" // replace with actual logo path
+          alt="LoveU365 Logo"
+          width={50}
+          height={50}
+          className="rounded-full"
+        />
+      </div>
+
+      {/* App Name */}
+      <h1 className="text-3xl font-bold text-pink-600 mb-2">LoveU365 ❤️</h1>
+      
+      {/* Welcome Message */}
+      <p className="text-xl text-gray-700">
+        Welcome to 365 days of love
       </p>
     </div>
   );
