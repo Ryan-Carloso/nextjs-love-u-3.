@@ -1,15 +1,21 @@
+// handlesubmit.tsx
+
 import React from 'react';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient('https://laqxbdncmapnhorlbbkg.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhcXhiZG5jbWFwbmhvcmxiYmtnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyNjg2MTcyNSwiZXhwIjoyMDQyNDM3NzI1fQ.Xr3j4FThRX5C0Zk5txIqobebk6v5FBf2K5Mahe8vdzY'); // Replace with your actual key
+const supabase = createClient(
+  'https://laqxbdncmapnhorlbbkg.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhcXhiZG5jbWFwbmhvcmxiYmtnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyNjg2MTcyNSwiZXhwIjoyMDQyNDM3NzI1fQ.Xr3j4FThRX5C0Zk5txIqobebk6v5FBf2K5Mahe8vdzY' // Replace with your actual key
+);
 
 type User = {
-  // ... user properties
+  // Define user properties if needed
 };
 
 type SubmitProps = {
   user: User | null;
   date: Date;
+  couplename: string;
   compliment: string;
   imageUris: string[];
   loading: boolean;
@@ -20,6 +26,7 @@ type SubmitData = {
   date: Date;
   compliment: string;
   imageUris: string[];
+  couplename: string;
 };
 
 // Added this type to include the random string
@@ -28,9 +35,10 @@ type DataToSubmit = {
   elogios: string;
   image_urls: string[];
   random_string: string; // New field for the random string
+  couplename: string;
 };
 
-// Function to generate a random 8-character alphanumeric string
+// Function to generate a random 12-character alphanumeric string
 const generateRandomString = (length: number): string => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%£€><';
   let result = '';
@@ -43,7 +51,7 @@ const generateRandomString = (length: number): string => {
 
 export const handleSubmit = async (
   user: User | null, // Allow user to be null
-  { date, compliment, imageUris }: SubmitData,
+  { date, compliment, imageUris, couplename }: SubmitData,
   setLoading: (loading: boolean) => void
 ) => {
   if (!user) {
@@ -57,9 +65,7 @@ export const handleSubmit = async (
   }
 
   if (!compliment || compliment.trim() === '') {
-    alert('Please at leats enter one compliment.');
-    // future add an button that if they need help ask AI to help it!
-    // like give 6 thinks u like in your Girlfriend, that ai will build 100 compliments about it! customized for u
+    alert('Please at least enter one compliment.');
     return;
   }
 
@@ -77,6 +83,7 @@ export const handleSubmit = async (
       elogios: JSON.stringify({ text: compliment }),
       image_urls: [], // Initialize image_urls as an empty array
       random_string: randomString, // Include the random string in the data
+      couplename: couplename, // Include the couplename in the data
     };
 
     // Upload all images
@@ -91,7 +98,7 @@ export const handleSubmit = async (
               contentType: 'image/jpeg',
             });
           if (storageError) throw storageError;
-          return storageData.path;
+          return storageData.path; // Return the image path
         })
       );
 
@@ -113,13 +120,14 @@ export const handleSubmit = async (
   }
 };
 
-export const HandleSubmitComponent = ({ user, date, compliment, imageUris, loading, setLoading }: SubmitProps) => {
-  return (
-    <div className='' >{/*<div className='flex items-center justify-center w-full py-1 px-4 bg-gradient-to-r from-rose-400 to-pink-500 text-white font-semibold rounded-full shadow-lg hover:from-rose-500 hover:to-pink-600 transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-400 ' > */}
+// HandleSubmitComponent
 
+export const HandleSubmitComponent = ({ couplename, user, date, compliment, imageUris, loading, setLoading }: SubmitProps) => {
+  return (
+    <div>
       <button
-        onClick={() => handleSubmit(user, { date, compliment, imageUris }, setLoading)} // Call handleSubmit with the loading state
-        disabled={loading} // Disable the button when loading
+        onClick={() => handleSubmit(user, { date, compliment, imageUris, couplename }, setLoading)} // Include couplename here
+        disabled={loading}
         className={`text-white py-2 px-4 rounded ${loading ? 'opacity-50' : ''}`}
       >
         {loading ? 'Submitting...' : 'Submit'}

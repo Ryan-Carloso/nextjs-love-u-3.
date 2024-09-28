@@ -17,7 +17,7 @@ import { signInUser } from '@/functions/supabase'
 
 
 
-//import { HandleSubmitComponent } from '@/functions/handlesubmit'
+import { HandleSubmitComponent } from '@/functions/handlesubmit'
 //will use this on the future to go to supabase
 //import supabase, { signInUser } from '@/functions/supabase'
 
@@ -86,13 +86,24 @@ export default function App() {
                   <DateTimePicker date={date} onDateChange={handleDateChange} />
 
                   <Compliments compliment={compliment} setCompliment={setCompliment} couplename={couplename} setCouplename={setCouplename} />
+                  <p className='text-xs text-gray-800'>Separete by "</p>
+                  <h1 className='text-xs -mt-40'>Separete by "</h1>
+
 
                   <ImgUpload imageUris={imageUris} pickImage={pickImage} removeImage={removeImage} />
 
                   <div className=' mb-16 flex items-center justify-center w-full py-2 px-4 bg-gradient-to-r from-rose-400 to-pink-500 text-white font-semibold rounded-full shadow-lg hover:from-rose-500 hover:to-pink-600 transition-all duration-400 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-400' >
 
-                  <AlertGoPay alert='I want an App personalized' />
-                  </div>
+                  <HandleSubmitComponent
+                  user={user}
+                  date={date}
+                  compliment={compliment}
+                  imageUris={imageUris}
+                  loading={loading}
+                  setLoading={setLoading}
+                  couplename={couplename}
+                />
+                </div>
 
 
                 </form>

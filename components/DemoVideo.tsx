@@ -59,7 +59,7 @@ const DemoVideo: React.FC<DemoVideoProps> = ({ videoPath }) => {
 const VideoApp: React.FC = () => {
   return (
     <div>
-      <h1 className='flex justify-center text-2xl mt-8'>Demo For the App</h1>
+      <h1 className='flex justify-center text-gray-700 text-2xl mt-8'>Demo video For the App</h1>
       <div className="flex overflow-x-auto space-x-4 py-8"> {/* Horizontal scrolling */}
         <div className='min-w-[150px] px-2'>
           <DemoVideo videoPath="/videosDemo/demo1.mp4" /> {/* Pass the video path */}

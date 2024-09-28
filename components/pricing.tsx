@@ -101,7 +101,7 @@ interface PricingTier {
 const pricingTiers: PricingTier[] = [
   {
     name: "Basic Love",
-    price: 13,
+    price: 12.99,
     description: "Essential features for keeping love strong.",
     features: [
       { name: "Up to 7 photos", included: true },
@@ -114,11 +114,11 @@ const pricingTiers: PricingTier[] = [
       { name: "Unlimited compliments", included: false },
       { name: "Advanced customization", included: false },
     ],
-    checkoutUrl: "https://checkout.hotmart.com/your-basic-love-link",
+    checkoutUrl: "https://pay.hotmart.com/K91987841M?off=lifjbje5&checkoutMode=10",
   },
   {
     name: "Eternal Love",
-    price: 18,
+    price: 17.99,
     description: "Unlimited expressions of love, forever.",
     features: [
       { name: "All Basic Love features", included: true },
@@ -127,7 +127,7 @@ const pricingTiers: PricingTier[] = [
       { name: "Automatic love reminders", included: true },
       { name: "Advanced customization", included: true },
     ],
-    checkoutUrl: "https://checkout.hotmart.com/your-eternal-love-link",
+    checkoutUrl: "https://pay.hotmart.com/K91987841M?off=mcf1kh81&checkoutMode=10",
   },
 ];
 
@@ -150,7 +150,7 @@ function PricingTierComponent({ tier }: { tier: PricingTier }) {
         </p>
         <ul className="space-y-2">
           {tier.features.map((feature, index) => (
-            <li key={index} className="flex items-center text-sm">
+            <li key={index} className="flex text-gray-700 items-center text-sm">
               {feature.name && feature.included ? (
                 <Heart className="mr-2 h-4 w-4 text-pink-500" />
               ) : feature.name && !feature.included ? (

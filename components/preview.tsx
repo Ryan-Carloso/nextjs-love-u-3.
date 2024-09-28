@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { ArrowBigDown } from 'lucide-react';
 import Image from 'next/image'
 
 interface PreviewProps {
@@ -16,7 +15,7 @@ export default function Preview({ imageUris, couplename, compliment, dateTime }:
   return (
     <div className="">
        <div className='flex justify-center items-center	'>
-      <h1 className='text-lg flex justify-center mb-2'>Here's a preview 👇      </h1>
+      <h1 className='text-lg flex text-gray-700 justify-center mb-2'>Here's a preview 👇      </h1>
       </div> 
       
       <IPhoneMockup>
@@ -65,18 +64,18 @@ function Notification({ compliment }: { compliment: string }) {
           <h1 className=" flex justify-end text-xs -mb-1 mr-1">now</h1>
           <h1 className="text-sm font-bold -mt-2">LOVEU365</h1>
           <p className="text-xs text-gray-600 truncate">{compliment}</p>
-
         </div>
       </div>
-    </div>
+      <h1 className='text-xs mt-1 ml-1 text-gray-600'>*Daily notification: this will show in the app.*</h1>
+      </div>
   )
 }
 
 function ImageSection({ imageUris, couplename }: { imageUris: string[], couplename: string  }) {
   return (
     <div>
-    <p className="text-sm text-gray-700 absolute top-[100px] left-4 right-4 flex justify-center items-center">{couplename}</p>
-    <div className="absolute top-[125px] left-4 right-4 flex justify-center items-center">
+    <p className="text-sm text-gray-700 absolute top-[120px] left-4 right-4 flex justify-center items-center">{couplename}</p>
+    <div className="absolute top-[145px] left-4 right-4 flex justify-center items-center">
       <div className="w-full h-[300px]">
         {imageUris.length > 0 ? (
           <img
@@ -98,7 +97,7 @@ function ImageSection({ imageUris, couplename }: { imageUris: string[], couplena
 function ComplimentSection({ compliment }: { compliment: string}) {
   return (
     <div className="absolute left-4 right-4 bottom-24 text-center">
-      <p className="text-sm text-gray-700">{compliment}</p>
+      <p className="text-sm text-gray-700 ">{compliment}</p>
 
     </div>
   )

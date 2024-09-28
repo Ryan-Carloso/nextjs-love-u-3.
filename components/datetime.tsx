@@ -28,7 +28,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({ date, onDateChange }) =
           onChange={onDateChange}
           dateFormat="yyyy-MM-dd"
           placeholderText="Select a date"
-          className="block w-full mr-40 px-3 py-2 sm:text-sm rounded-md focus:ring-pink-500 focus:border-pink-500"
+          className="block w-full text-gray-600 mr-40 px-3 py-2 sm:text-sm rounded-md focus:ring-pink-500 focus:border-pink-500"
           ref={datePickerRef}
         />
         <button

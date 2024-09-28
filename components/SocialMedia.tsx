@@ -11,7 +11,7 @@ const SocialMedia = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <h1 className="text-center mt-6">App Made By Ryan</h1>
+      <h1 className="text-center text-gray-600 mt-6">App Made By Ryan</h1>
 
       <div className="flex justify-center my-6">
         <button
