@@ -45,14 +45,14 @@ type DataToSubmit = {
 };
 
 // Function to generate a random 2-character alphanumeric string
-const generateRandomString = (couplename: string, length: number = 3): string => {
+const generateRandomString = (couplename: string, length: number = 2): string => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%£€><';
   let result = '';
   for (let i = 0; i < length; i++) {
     const randomIndex = Math.floor(Math.random() * characters.length);
     result += characters[randomIndex];
   }
-  return `${couplename}${result}`;
+  return `${couplename}${result}`; // Example: "Ryan and Sofia❤️J%"
 };
 
 // handleSubmit function
@@ -60,35 +60,35 @@ export const handleSubmit = async (
   user: User | null, // Allow user to be null
   { date, compliment, imageUris, couplename }: SubmitData,
   setLoading: (loading: boolean) => void
-): Promise<boolean> => {
+): Promise<string | null> => {
   if (!user) {
-    alert('You must be logged in to submit data.')
-    return false
+    alert('You must be logged in to submit data.');
+    return null;
   }
 
   if (imageUris.length === 0) {
-    alert('Please upload at least one photo.')
-    return false
+    alert('Please upload at least one photo.');
+    return null;
   }
 
   if (!compliment || compliment.trim() === '') {
-    alert('Please enter at least one compliment.')
-    return false
+    alert('Please enter at least one compliment.');
+    return null;
   }
 
   if (!couplename || couplename.trim() === '') {
-    alert('Please enter the couple\'s name.')
-    return false
+    alert("Please enter the couple's name.");
+    return null;
   }
 
-  setLoading(true) // Set loading to true
+  setLoading(true); // Set loading to true
 
   try {
     if (!date) {
-      throw new Error('Please select a date')
+      throw new Error('Please select a date');
     }
 
-    const randomString = generateRandomString(couplename, 2) // Generate the random string
+    const randomString = generateRandomString(couplename, 2); // Generate the random string
 
     const data: DataToSubmit = {
       date_time: date.toISOString(),
@@ -96,46 +96,46 @@ export const handleSubmit = async (
       image_urls: [], // Initialize image_urls as an empty array
       random_string: randomString, // Include the random string in the data
       couplename: couplename, // Include the couplename in the data
-    }
+    };
 
     // Upload all images
     if (imageUris.length > 0) {
       const imageUrls: string[] = await Promise.all(
         imageUris.map(async (uri) => {
-          const response = await fetch(uri)
-          const blob = await response.blob()
+          const response = await fetch(uri);
+          const blob = await response.blob();
           const { error: storageError, data: storageData } = await supabase.storage
             .from('images')
             .upload(`compliment-${Date.now()}-${Math.random()}.jpg`, blob, {
               contentType: 'image/jpeg',
-            })
-          if (storageError) throw storageError
-          return storageData.path // Return the image path
+            });
+          if (storageError) throw storageError;
+          return storageData.path; // Return the image path
         })
-      )
+      );
 
-      data.image_urls = imageUrls // Save all image URLs
+      data.image_urls = imageUrls; // Save all image URLs
     }
 
-    const { error } = await supabase.from('users').insert(data)
+    const { error } = await supabase.from('users').insert(data);
 
-    if (error) throw error
+    if (error) throw error;
 
-    alert('Data submitted successfully!')
-    return true
+    alert('Data submitted successfully!');
+    return randomString; // Return the generated string
   } catch (error) {
-    console.error('Error submitting data:', error)
-    alert('Error submitting data. Please try again.')
-    return false
+    console.error('Error submitting data:', error);
+    alert('Error submitting data. Please try again.');
+    return null; // Return null on error
   } finally {
-    setLoading(false) // Set loading to false
+    setLoading(false); // Set loading to false
   }
-}
+};
 
 // Props for HandleSubmitComponent including the callback
 type HandleSubmitComponentProps = SubmitProps & {
   onGenerateRandomString: (str: string) => void; // Callback to pass the generated string
-}
+};
 
 // HandleSubmitComponent
 export const HandleSubmitComponent: React.FC<HandleSubmitComponentProps> = ({
@@ -149,12 +149,11 @@ export const HandleSubmitComponent: React.FC<HandleSubmitComponentProps> = ({
   onGenerateRandomString
 }) => {
   const handleClick = async () => {
-    const success = await handleSubmit(user, { date, compliment, imageUris, couplename }, setLoading)
-    if (success) {
-      const generatedStr = generateRandomString(couplename, 2)
-      onGenerateRandomString(generatedStr) // Invoke the callback with the generated string
+    const generatedStr = await handleSubmit(user, { date, compliment, imageUris, couplename }, setLoading);
+    if (generatedStr) {
+      onGenerateRandomString(generatedStr); // Pass the generated string to the parent
     }
-  }
+  };
 
   return (
     <div>
@@ -166,5 +165,5 @@ export const HandleSubmitComponent: React.FC<HandleSubmitComponentProps> = ({
         {loading ? 'Submitting...' : 'Submit'}
       </button>
     </div>
-  )
-}
+  );
+};
