@@ -87,7 +87,6 @@ export default function App() {
 
                   <Compliments compliment={compliment} setCompliment={setCompliment} couplename={couplename} setCouplename={setCouplename} />
                   <p className='text-xs text-gray-800'>Separete by "</p>
-                  <h1 className='text-xs -mt-40'>Separete by "</h1>
 
 
                   <ImgUpload imageUris={imageUris} pickImage={pickImage} removeImage={removeImage} />
@@ -122,16 +121,6 @@ export default function App() {
         </div>
         <div className='mt-8'>
           <HowWorks /> 
-        </div>
-        <div className="mt-8" id="pricing">
-          <PricingModel />
-        </div>
-
-        <VideoApp />
-        <FAQ/>
-        <div className=' mb-16 flex items-center justify-center w-full py-2 px-4 bg-gradient-to-r from-rose-400 to-pink-500 text-white font-semibold rounded-full shadow-lg hover:from-rose-500 hover:to-pink-600 transition-all duration-400 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-400' >
-
-          <AlertGoPay alert='I want an App personalized' />
         </div>
         <SocialMedia/>
 

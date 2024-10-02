@@ -9,6 +9,10 @@ const SocialMedia = () => {
     window.open(url, '_blank');
   };
 
+  const emailSupport = () => {
+    window.location.href = 'mailto:support@makedbyryan.tech';
+  };
+
   return (
     <div className="flex flex-col items-center">
       <h1 className="text-center text-gray-600 mt-6">App Made By Ryan</h1>
@@ -28,10 +32,18 @@ const SocialMedia = () => {
         </button>
         <button
           className="mx-5 focus:outline-none"
-          onClick={() => openLink('https://www.tiktok.com/@madebryan')}
+          onClick={() => openLink('https://www.tiktok.com/@make4ryan')}
         >
           <FontAwesomeIcon icon={faTiktok} size="2x" className="text-black" />
         </button>
+              {/* Support Email Button */}
+      <div className='flex justify-center text-s'>
+        <button onClick={emailSupport} className='bg-blue-500 text-white py-1 px-2 rounded'>
+          Need support?
+        </button>
+      </div>
+
+
       </div>
     </div>
   );
