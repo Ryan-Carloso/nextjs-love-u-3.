@@ -1,25 +1,18 @@
+// App.tsx
+
 "use client"
 
 import React, { useState, useEffect, useCallback } from 'react'
-import VideoApp from '@/components/DemoVideo'
 import Header from '@/components/header'
 import DateTimePicker from '@/components/datetime' 
 import Compliments from '@/components/compliments' 
 import ImgUpload from '@/components/imgUpload'
 import Preview from '@/components/preview'
 import { format } from 'date-fns'
-import PricingModel from '@/components/pricing'
-import AlertGoPay from '@/functions/AlertGoPay'
 import HowWorks from '@/components/HowWorks'
-import FAQ from '@/components/FAQ'
 import SocialMedia from '@/components/SocialMedia'
 import { signInUser } from '@/functions/supabase'
-
-
-
 import { HandleSubmitComponent } from '@/functions/handlesubmit'
-//will use this on the future to go to supabase
-//import supabase, { signInUser } from '@/functions/supabase'
 
 export default function App() {
   const [date, setDate] = useState(new Date())
@@ -29,6 +22,7 @@ export default function App() {
   const [couplename, setCouplename] = useState('')
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(false)
+  const [randomString, setRandomString] = useState('') // New state for random string
 
   const TEST_USER_EMAIL = 'admin@makedbyryan.tech'
   const TEST_USER_PASSWORD = 'adminpassword134#'
@@ -85,25 +79,38 @@ export default function App() {
 
                   <DateTimePicker date={date} onDateChange={handleDateChange} />
 
-                  <Compliments compliment={compliment} setCompliment={setCompliment} couplename={couplename} setCouplename={setCouplename} />
-                  <p className='text-xs text-gray-800'>Separete by "</p>
+                  <Compliments 
+                    compliment={compliment} 
+                    setCompliment={setCompliment} 
+                    couplename={couplename} 
+                    setCouplename={setCouplename} 
+                  />
+                  <p className='text-xs text-gray-800'>Separate by ","</p>
 
+                  <ImgUpload 
+                    imageUris={imageUris} 
+                    pickImage={pickImage} 
+                    removeImage={removeImage} 
+                  />
 
-                  <ImgUpload imageUris={imageUris} pickImage={pickImage} removeImage={removeImage} />
+                  <div className='mb-16 flex items-center justify-center w-full py-2 px-4 bg-gradient-to-r from-rose-400 to-pink-500 text-white font-semibold rounded-full shadow-lg hover:from-rose-500 hover:to-pink-600 transition-all duration-400 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-400'>
+                    <HandleSubmitComponent
+                      user={user}
+                      date={date}
+                      compliment={compliment}
+                      imageUris={imageUris}
+                      loading={loading}
+                      setLoading={setLoading}
+                      couplename={couplename}
+                      onGenerateRandomString={setRandomString} // Pass the callback
+                    />
+                  </div>
 
-                  <div className=' mb-16 flex items-center justify-center w-full py-2 px-4 bg-gradient-to-r from-rose-400 to-pink-500 text-white font-semibold rounded-full shadow-lg hover:from-rose-500 hover:to-pink-600 transition-all duration-400 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-400' >
-
-                  <HandleSubmitComponent
-                  user={user}
-                  date={date}
-                  compliment={compliment}
-                  imageUris={imageUris}
-                  loading={loading}
-                  setLoading={setLoading}
-                  couplename={couplename}
-                />
-                </div>
-
+                  {randomString && (
+                    <div className="mt-4 p-2 bg-green-100 text-green-800 rounded">
+                      Generated String: {randomString}
+                    </div>
+                  )}
 
                 </form>
               </div>
