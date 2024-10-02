@@ -44,15 +44,15 @@ type DataToSubmit = {
   couplename: string;
 };
 
-// Function to generate a random 12-character alphanumeric string
-const generateRandomString = (length: number): string => {
+// Function to generate a random 2-character alphanumeric string
+const generateRandomString = (couplename: string, length: number = 3): string => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%£€><';
   let result = '';
   for (let i = 0; i < length; i++) {
     const randomIndex = Math.floor(Math.random() * characters.length);
     result += characters[randomIndex];
   }
-  return result;
+  return `${couplename}${result}`;
 };
 
 // handleSubmit function
@@ -76,6 +76,11 @@ export const handleSubmit = async (
     return false
   }
 
+  if (!couplename || couplename.trim() === '') {
+    alert('Please enter the couple\'s name.')
+    return false
+  }
+
   setLoading(true) // Set loading to true
 
   try {
@@ -83,7 +88,7 @@ export const handleSubmit = async (
       throw new Error('Please select a date')
     }
 
-    const randomString = generateRandomString(12) // Generate the random string
+    const randomString = generateRandomString(couplename, 2) // Generate the random string
 
     const data: DataToSubmit = {
       date_time: date.toISOString(),
@@ -146,7 +151,7 @@ export const HandleSubmitComponent: React.FC<HandleSubmitComponentProps> = ({
   const handleClick = async () => {
     const success = await handleSubmit(user, { date, compliment, imageUris, couplename }, setLoading)
     if (success) {
-      const generatedStr = generateRandomString(12)
+      const generatedStr = generateRandomString(couplename, 2)
       onGenerateRandomString(generatedStr) // Invoke the callback with the generated string
     }
   }
