@@ -1,7 +1,6 @@
-// handleSubmit.tsx
-
 import React from 'react';
 import { createClient } from '@supabase/supabase-js';
+import axios from 'axios';
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -9,22 +8,10 @@ const supabase = createClient(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhcXhiZG5jbWFwbmhvcmxiYmtnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyNjg2MTcyNSwiZXhwIjoyMDQyNDM3NzI1fQ.Xr3j4FThRX5C0Zk5txIqobebk6v5FBf2K5Mahe8vdzY' // Replace with your actual key
 );
 
-// Define User type (extend as needed)
+// Define User type
 type User = {
   id: string;
   email: string;
-  // Add other user properties if necessary
-};
-
-// Define props for handleSubmit function
-type SubmitProps = {
-  user: User | null;
-  date: Date;
-  couplename: string;
-  compliment: string;
-  imageUris: string[];
-  loading: boolean;
-  setLoading: (loading: boolean) => void;
 };
 
 // Define data structure for submission
@@ -40,7 +27,7 @@ type DataToSubmit = {
   date_time: string;
   elogios: string;
   image_urls: string[];
-  random_string: string; // New field for the random string
+  random_string: string;
   couplename: string;
 };
 
@@ -53,6 +40,36 @@ const generateRandomString = (couplename: string, length: number = 2): string =>
     result += characters[randomIndex];
   }
   return `${couplename}${result}`; // Example: "Ryan and Sofia❤️J%"
+};
+
+// Upload an image to Firebase storage using Axios
+const uploadImageToFirebase = async (uri: string, folderPath: string, imageName: string): Promise<string> => {
+  const uploadURL = `https://firebasestorage.googleapis.com/v0/b/loveu365-cbc03.appspot.com/o/${encodeURIComponent(folderPath + '/' + imageName)}?uploadType=media`;
+
+  try {
+    const response = await fetch(uri); // Get image from URI
+    const blob = await response.blob(); // Convert to blob
+
+    const formData = new FormData();
+    formData.append('file', blob, imageName); // Append blob as 'file'
+
+    // Make Axios request to Firebase storage
+    const uploadResponse = await axios.post(uploadURL, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    if (uploadResponse.status === 200) {
+      // Build the download URL based on Firebase Storage rules
+      return `https://firebasestorage.googleapis.com/v0/b/loveu365-cbc03.appspot.com/o/${encodeURIComponent(folderPath + '/' + imageName)}?alt=media`;
+    }
+
+    throw new Error('Failed to upload image');
+  } catch (error) {
+    console.error('Error uploading image to Firebase:', error);
+    throw error;
+  }
 };
 
 // handleSubmit function
@@ -90,6 +107,8 @@ export const handleSubmit = async (
 
     const randomString = generateRandomString(couplename, 2); // Generate the random string
 
+    const folderPath = `couples/${randomString}`; // Use the same folder path for all images
+
     const data: DataToSubmit = {
       date_time: date.toISOString(),
       elogios: JSON.stringify({ text: compliment }),
@@ -98,25 +117,18 @@ export const handleSubmit = async (
       couplename: couplename, // Include the couplename in the data
     };
 
-    // Upload all images
-    if (imageUris.length > 0) {
-      const imageUrls: string[] = await Promise.all(
-        imageUris.map(async (uri) => {
-          const response = await fetch(uri);
-          const blob = await response.blob();
-          const { error: storageError, data: storageData } = await supabase.storage
-            .from('images')
-            .upload(`compliment-${Date.now()}-${Math.random()}.jpg`, blob, {
-              contentType: 'image/jpeg',
-            });
-          if (storageError) throw storageError;
-          return storageData.path; // Return the image path
-        })
-      );
+    // Upload all images and collect their URLs
+    const imageUrls: string[] = await Promise.all(
+      imageUris.map(async (uri, index) => {
+        const imageName = `image-${index + 1}-${Date.now()}.jpg`; // Generate unique image name with index
+        const imageUrl = await uploadImageToFirebase(uri, folderPath, imageName); // Upload image and get the URL
+        return imageUrl; // Return the image URL
+      })
+    );
 
-      data.image_urls = imageUrls; // Save all image URLs
-    }
+    data.image_urls = imageUrls; // Save all image URLs
 
+    // Insert the data into Supabase
     const { error } = await supabase.from('users').insert(data);
 
     if (error) throw error;
@@ -133,7 +145,14 @@ export const handleSubmit = async (
 };
 
 // Props for HandleSubmitComponent including the callback
-type HandleSubmitComponentProps = SubmitProps & {
+type HandleSubmitComponentProps = {
+  user: User | null;
+  date: Date;
+  compliment: string;
+  imageUris: string[];
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
+  couplename: string;
   onGenerateRandomString: (str: string) => void; // Callback to pass the generated string
 };
 

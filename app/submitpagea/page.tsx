@@ -104,18 +104,19 @@ export default function App() {
                     removeImage={removeImage}
                   />
 
-                  <div className='mb-16 flex items-center justify-center w-full py-2 px-4 bg-gradient-to-r from-rose-400 to-pink-500 text-white font-semibold rounded-full shadow-lg hover:from-rose-500 hover:to-pink-600 transition-all duration-400 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-400'>
-                    <HandleSubmitComponent
-                      user={user}
-                      date={date}
-                      compliment={compliment}
-                      imageUris={imageUris}
-                      loading={loading}
-                      setLoading={setLoading}
-                      couplename={couplename}
-                      onGenerateRandomString={handleRandomStringChange} // Pass the callback
-                    />
-                  </div>
+          <div className='mb-16 flex items-center justify-center w-full py-2 px-4 bg-gradient-to-r from-rose-400 to-pink-500 text-white font-semibold rounded-full shadow-lg hover:from-rose-500 hover:to-pink-600 transition-all duration-400 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-400'>
+            <HandleSubmitComponent
+              user={user}
+              date={date}
+              compliment={compliment}
+              imageUris={imageUris}
+              loading={loading}
+              setLoading={setLoading}
+              couplename={couplename}
+              onGenerateRandomString={handleRandomStringChange} // Pass the callback function
+            />
+          </div>
+
 
                   {randomString && (
                     <div className="mt-4 p-2 bg-green-100 text-green-800 rounded">
