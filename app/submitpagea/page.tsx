@@ -1,5 +1,3 @@
-// App.tsx
-
 "use client";
 
 import React, { useState, useEffect, useCallback } from 'react';
@@ -48,6 +46,11 @@ export default function App() {
     const savedString = localStorage.getItem('randomString');
     if (savedString) {
       setRandomString(savedString);
+    } else {
+      // Generate a new random string if none exists
+      const newString = Math.random().toString(36).substring(2, 15); // Example random string generation
+      setRandomString(newString);
+      localStorage.setItem('randomString', newString); // Save the random string to localStorage
     }
   }, []);
 
@@ -73,6 +76,9 @@ export default function App() {
     setRandomString(newString);
     localStorage.setItem('randomString', newString); // Save the random string to localStorage
   };
+
+  const appUrl = `loveu365a://?input=${randomString}`;
+  console.log('App URL:', appUrl);
 
   return (
     <div className="min-h-screen bg-pink-50 px-4 py-6 sm:px-6 lg:px-8">
@@ -104,26 +110,29 @@ export default function App() {
                     removeImage={removeImage}
                   />
 
-          <div className='mb-16 flex items-center justify-center w-full py-2 px-4 bg-gradient-to-r from-rose-400 to-pink-500 text-white font-semibold rounded-full shadow-lg hover:from-rose-500 hover:to-pink-600 transition-all duration-400 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-400'>
-            <HandleSubmitComponent
-              user={user}
-              date={date}
-              compliment={compliment}
-              imageUris={imageUris}
-              loading={loading}
-              setLoading={setLoading}
-              couplename={couplename}
-              onGenerateRandomString={handleRandomStringChange} // Pass the callback function
-            />
-          </div>
-
+                  <div className='mb-16 flex items-center justify-center w-full py-2 px-4 bg-gradient-to-r from-rose-400 to-pink-500 text-white font-semibold rounded-full shadow-lg hover:from-rose-500 hover:to-pink-600 transition-all duration-400 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-400'>
+                    <HandleSubmitComponent
+                      user={user}
+                      date={date}
+                      compliment={compliment}
+                      imageUris={imageUris}
+                      loading={loading}
+                      setLoading={setLoading}
+                      couplename={couplename}
+                      onGenerateRandomString={handleRandomStringChange} // Pass the callback function
+                    />
+                  </div>
 
                   {randomString && (
-                    <div className="mt-4 p-2 bg-green-100 text-green-800 rounded">
-                      Generated String: {randomString}
+                    <div>
+                      <div className="mt-4 p-2 bg-green-100 text-green-800 rounded">
+                        Generated code: {randomString}
+                      </div>
+                      <div>
+                        <a href={appUrl} target="_blank" rel="noopener noreferrer">click here to open the app</a>
+                      </div>
                     </div>
                   )}
-
                 </form>
               </div>
 
@@ -142,7 +151,6 @@ export default function App() {
           <HowWorks />
         </div>
         <SocialMedia />
-
       </div>
     </div>
   );
