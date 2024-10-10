@@ -11,6 +11,8 @@ import HowWorks from '@/components/HowWorks';
 import SocialMedia from '@/components/SocialMedia';
 import { signInUser } from '@/functions/supabase';
 import { HandleSubmitComponent } from '@/functions/handlesubmit';
+import OpenAppButton from '@/functions/OpenAppButton'; // Import the button component
+
 
 export default function App() {
   const [date, setDate] = useState(new Date());
@@ -129,7 +131,7 @@ export default function App() {
                         Generated code: {randomString}
                       </div>
                       <div>
-                        <a href={appUrl} target="_blank" rel="noopener noreferrer">click here to open the app</a>
+                      <OpenAppButton appUrl={appUrl} />
                       </div>
                     </div>
                   )}
