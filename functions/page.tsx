@@ -131,7 +131,6 @@ export default function App() {
                         Generated code: {randomString}
                       </div>
                       <div>
-      <a href={`/share?appUrl=${encodeURIComponent(appUrl)}&logoUrl=${encodeURIComponent('/logo.png')}`}>Go to share</a>
                       <OpenAppButton appUrl={appUrl} logoUrl="/logo.png" />
                       </div>
                     </div>

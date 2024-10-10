@@ -22,6 +22,7 @@
     "date-fns": "^4.1.0",
     "lucide-react": "^0.445.0",
     "next": "14.2.13",
+    "qrious": "^4.0.2",
     "react": "^18",
     "react-datepicker": "^7.4.0",
     "react-datetime-picker": "^6.0.1",
