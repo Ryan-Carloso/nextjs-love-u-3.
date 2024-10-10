@@ -31,15 +31,19 @@ type DataToSubmit = {
   couplename: string;
 };
 
-// Function to generate a random 2-character alphanumeric string
+// Function to generate a random 2-character alphanumeric string and remove spaces from couplename
 const generateRandomString = (couplename: string, length: number = 2): string => {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%£€><';
+  // Remove all whitespace characters from couplename
+  const sanitizedCouplename = couplename.replace(/\s+/g, '');
+
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz><';
   let result = '';
   for (let i = 0; i < length; i++) {
     const randomIndex = Math.floor(Math.random() * characters.length);
     result += characters[randomIndex];
   }
-  return `${couplename}${result}`; // Example: "Ryan and Sofia❤️J%"
+
+  return `${sanitizedCouplename}${result}`; // Example: "RyanandSofia❤️J%"
 };
 
 // Upload an image to Firebase storage using Axios
@@ -105,7 +109,7 @@ export const handleSubmit = async (
       throw new Error('Please select a date');
     }
 
-    const randomString = generateRandomString(couplename, 2); // Generate the random string
+    const randomString = generateRandomString(couplename, 3); // Generate the random string without spaces
 
     const folderPath = `couples/${randomString}`; // Use the same folder path for all images
 
@@ -114,7 +118,7 @@ export const handleSubmit = async (
       elogios: JSON.stringify({ text: compliment }),
       image_urls: [], // Initialize image_urls as an empty array
       random_string: randomString, // Include the random string in the data
-      couplename: couplename, // Include the couplename in the data
+      couplename: couplename.replace(/\s+/g, ''), // Store couplename without spaces
     };
 
     // Upload all images and collect their URLs
@@ -166,23 +170,49 @@ export const HandleSubmitComponent: React.FC<HandleSubmitComponentProps> = ({
   setLoading,
   couplename,
   onGenerateRandomString
-}) => {
-  const handleClick = async () => {
-    const generatedStr = await handleSubmit(user, { date, compliment, imageUris, couplename }, setLoading);
-    if (generatedStr) {
-      onGenerateRandomString(generatedStr); // Pass the generated string to the parent
-    }
-  };
-
-  return (
-    <div>
-      <button
-        onClick={handleClick}
-        disabled={loading}
-        className={`text-white py-2 px-4 rounded ${loading ? 'opacity-50' : ''}`}
-      >
-        {loading ? 'Submitting...' : 'Submit'}
-      </button>
-    </div>
-  );
+}) => {const handleClick = async () => {
+  const generatedStr = await handleSubmit(user, { date, compliment, imageUris, couplename }, setLoading);
+  if (generatedStr) {
+    onGenerateRandomString(generatedStr); // Pass the generated string to the parent
+  }
 };
+
+return (
+  <div>
+    <button
+      onClick={handleClick}
+      disabled={loading}
+      className={`text-white py-2 px-4 rounded flex items-center justify-center ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+    >
+      {loading ? (
+        <>
+          Submitting...
+          <div className="spinner ml-2"></div> {/* Spinner beside the text */}
+        </>
+      ) : (
+        'Submit'
+      )}
+    </button>
+
+    <style jsx>{`
+      .spinner {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-left-color: #fff;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    `}</style>
+  </div>
+);
+  };

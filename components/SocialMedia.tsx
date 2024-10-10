@@ -38,7 +38,7 @@ const SocialMedia = () => {
         </button>
               {/* Support Email Button */}
       <div className='flex justify-center text-s'>
-        <button onClick={emailSupport} className='bg-blue-500 text-white py-1 px-2 rounded'>
+        <button onClick={emailSupport} className='bg-pink-500 text-white py-1 px-2 rounded'>
           Need support?
         </button>
       </div>
