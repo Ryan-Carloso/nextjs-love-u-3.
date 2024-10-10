@@ -50,7 +50,7 @@ const Share: React.FC = () => {
           <img src={logoUrl} alt="Logo" className=" rounded-lg transition-transform transform hover:scale-105" />
         )}
         
-        <OpenAppButton appUrl={appUrl} logoUrl="/logo.png" />
+        <OpenAppButton appUrl={appUrl} />
 
         <div className="  flex justify-center">
           <button 
