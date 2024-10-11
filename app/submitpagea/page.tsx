@@ -25,7 +25,7 @@ export default function App() {
   const [randomString, setRandomString] = useState(''); // State for random string
 
   const TEST_USER_EMAIL = 'admin@makedbyryan.tech';
-  const TEST_USER_PASSWORD = 'adminpassword134#';
+  const TEST_USER_PASSWORD = 'Adminpassword134';
 
   useEffect(() => {
     const authenticateUser = async () => {

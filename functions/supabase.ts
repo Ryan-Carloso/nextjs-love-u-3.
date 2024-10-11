@@ -1,13 +1,22 @@
-import { createClient } from '@supabase/supabase-js'
+// lib/supabaseClient.ts
 
-const supabaseUrl = 'https://laqxbdncmapnhorlbbkg.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhcXhiZG5jbWFwbmhvcmxiYmtnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyNjg2MTcyNSwiZXhwIjoyMDQyNDM3NzI1fQ.Xr3j4FThRX5C0Zk5txIqobebk6v5FBf2K5Mahe8vdzY';
+import { createClient } from '@supabase/supabase-js';
+
+// Retrieve environment variables
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+// Check if environment variables are defined
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  throw new Error('Missing Supabase environment variables');
+}
 
 // Initialize Supabase client
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 export default supabase;
 
+// Function to sign in a user
 export const signInUser = async (email: string, password: string) => {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
