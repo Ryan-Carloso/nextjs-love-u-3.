@@ -2,11 +2,19 @@ import React from 'react';
 import { createClient } from '@supabase/supabase-js';
 import axios from 'axios';
 
+// Ensure environment variables are not undefined
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+// Throw an error if the environment variables are not set
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error('Missing Supabase URL or Key in environment variables');
+}
+
 // Initialize Supabase client
-const supabase = createClient(
-  'https://laqxbdncmapnhorlbbkg.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhcXhiZG5jbWFwbmhvcmxiYmtnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyNjg2MTcyNSwiZXhwIjoyMDQyNDM3NzI1fQ.Xr3j4FThRX5C0Zk5txIqobebk6v5FBf2K5Mahe8vdzY' // Replace with your actual key
-);
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+
 
 // Define User type
 type User = {

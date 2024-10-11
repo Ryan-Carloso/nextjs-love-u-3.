@@ -30,8 +30,9 @@ export default function App() {
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(false)
 
-  const TEST_USER_EMAIL = 'admin@makedbyryan.tech'
-  const TEST_USER_PASSWORD = 'adminpassword134#'
+  const TEST_USER_EMAIL = process.env.NEXT_PUBLIC_TEST_USER_EMAIL!;
+  const TEST_USER_PASSWORD = process.env.NEXT_PUBLIC_TEST_USER_PASSWORD!;
+
 
   useEffect(() => {
     const authenticateUser = async () => {

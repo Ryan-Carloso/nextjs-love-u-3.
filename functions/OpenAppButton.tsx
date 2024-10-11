@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import QRious from 'qrious'; // Import QRious
+// @ts-ignore
+import QRious from 'qrious';
 import html2canvas from 'html2canvas'; // Import html2canvas
 
 interface OpenAppButtonProps {

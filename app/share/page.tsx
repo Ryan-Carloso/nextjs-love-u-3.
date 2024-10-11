@@ -1,12 +1,11 @@
 "use client";
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation'; 
 import OpenAppButton from '@/functions/OpenAppButton'; // Import the button component
 import html2canvas from 'html2canvas'; // Import html2canvas
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLinkedin, faInstagram, faTiktok } from '@fortawesome/free-brands-svg-icons';
-
 
 const Share: React.FC = () => {
   const searchParams = useSearchParams();
@@ -47,29 +46,36 @@ const Share: React.FC = () => {
         </p>
         
         {logoUrl && (
-          <img src={logoUrl} alt="Logo" className=" rounded-lg transition-transform transform hover:scale-105" />
+          <img src={logoUrl} alt="Logo" className="rounded-lg transition-transform transform hover:scale-105" />
         )}
         
         <OpenAppButton appUrl={appUrl} />
 
-        <div className="  flex justify-center">
+        <div className="flex justify-center">
           <button 
             onClick={downloadScreenshot}
             className="bg-pink-500 text-white py-3 px-6 rounded-lg hover:bg-pink-600 transition duration-300 ease-in-out shadow-md hover:shadow-lg"
           >
             Download Screenshot
           </button>
+        </div>
         
-        </div>
-        <div className="  flex justify-center mt-2">
-        <div className='text-black'> make4ryan </div>
-        <div className="ml-1"        >
-        <FontAwesomeIcon icon={faInstagram} size="1x" className="text-black" />
-        </div>
+        <div className="flex justify-center mt-2">
+          <div className='text-black'>make4ryan</div>
+          <div className="ml-1">
+            <FontAwesomeIcon icon={faInstagram} size="1x" className="text-black" />
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default Share;
+// Wrap the component in Suspense when exporting
+const SuspenseWrapper: React.FC = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <Share />
+  </Suspense>
+);
+
+export default SuspenseWrapper;

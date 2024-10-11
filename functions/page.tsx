@@ -24,9 +24,9 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [randomString, setRandomString] = useState(''); // State for random string
 
-  const TEST_USER_EMAIL = 'admin@makedbyryan.tech';
-  const TEST_USER_PASSWORD = 'adminpassword134#';
-
+  const TEST_USER_EMAIL = process.env.NEXT_PUBLIC_TEST_USER_EMAIL!;
+  const TEST_USER_PASSWORD = process.env.NEXT_PUBLIC_TEST_USER_PASSWORD!;
+  
   useEffect(() => {
     const authenticateUser = async () => {
       setLoading(true);
@@ -131,7 +131,7 @@ export default function App() {
                         Generated code: {randomString}
                       </div>
                       <div>
-                      <OpenAppButton appUrl={appUrl} logoUrl="/logo.png" />
+                      <OpenAppButton appUrl={appUrl}/>
                       </div>
                     </div>
                   )}
