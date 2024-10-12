@@ -13,7 +13,7 @@ import { signInUser } from '@/functions/supabase';
 import { HandleSubmitComponent } from '@/functions/handlesubmit';
 import OpenAppButton from '@/functions/OpenAppButton'; // Import the button component
 
-
+//
 export default function App() {
   const [date, setDate] = useState(new Date());
   const [compliment, setCompliment] = useState('');
